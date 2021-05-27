@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniRegistrar.Models;
 
 namespace UniRegistrar.Migrations
 {
     [DbContext(typeof(UniRegistrarContext))]
-    partial class UniRegistrarContextModelSnapshot : ModelSnapshot
+    [Migration("20210527021156_InitialForRealsThisTime")]
+    partial class InitialForRealsThisTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,12 +34,7 @@ namespace UniRegistrar.Migrations
                     b.Property<string>("CourseNumber")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.HasKey("CourseId");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Courses");
                 });
@@ -63,27 +60,10 @@ namespace UniRegistrar.Migrations
                     b.ToTable("CourseStudent");
                 });
 
-            modelBuilder.Entity("UniRegistrar.Models.Department", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("DepartmentId");
-
-                    b.ToTable("Department");
-                });
-
             modelBuilder.Entity("UniRegistrar.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EnrollmentDate")
@@ -94,20 +74,7 @@ namespace UniRegistrar.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("UniRegistrar.Models.Course", b =>
-                {
-                    b.HasOne("UniRegistrar.Models.Department", "Department")
-                        .WithMany("Courses")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("UniRegistrar.Models.CourseStudent", b =>
@@ -129,27 +96,9 @@ namespace UniRegistrar.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("UniRegistrar.Models.Student", b =>
-                {
-                    b.HasOne("UniRegistrar.Models.Department", "Department")
-                        .WithMany("Students")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("UniRegistrar.Models.Course", b =>
                 {
                     b.Navigation("JoinEntities");
-                });
-
-            modelBuilder.Entity("UniRegistrar.Models.Department", b =>
-                {
-                    b.Navigation("Courses");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("UniRegistrar.Models.Student", b =>

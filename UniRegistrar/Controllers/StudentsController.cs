@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft .EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace UniRegistrar.Controllers
 {
@@ -26,7 +27,21 @@ namespace UniRegistrar.Controllers
     {
       // List<Course> courseList= _db.Courses.ToList();
       // ViewBag.CourseList = courseList;
-      ViewBag.CourseId = new MultiSelectList(_db.Courses, "CourseId", "CourseName");
+      // ViewBag.Courses = new MultiSelectList(_db.Courses, "CourseId", "CourseName");
+      ViewBag.CourseList = _db.Courses.ToList();
+      Console.WriteLine(ViewBag.CourseList);
+      return View();
+    }
+    [HttpPost]
+    public ActionResult Create(Student student, int[] CourseId)
+    {
+      _db.Students.Add(student);
+      _db.SaveChanges();
+      // foreach(int courseId in int[] CourseId)
+      // {
+      //   _db.CourseStudent.Add(new CourseStudent() { CourseId = courseId, StudentId = student.StudentId});
+      // }
+      Console.WriteLine(CourseId);
       return View();
     }
   }

@@ -3,6 +3,7 @@
 }
 
 @model UniRegistrar.Models.Student
+@using UniRegistrar.Models
 
 <h4>Register a new student</h4>
 
@@ -13,19 +14,22 @@
 
   @Html.Label("Enrollment date")
   @Html.TextBoxFor(model => model.EnrollmentDate)
-
-  @Html.TextBoxFor("CourseId")
-  @* @Html.Label("Select courses to enroll in")
-  for (var i = 0; i < ViewBag.CourseList.Count; i++)
+  <br>
+  <br>
+  @Html.Label("Select courses to enroll in")
+  @* for (var i = 0; i < ViewBag.CourseList.Count; i++)
   {
 
-  }  *@
-  @foreach(var course in ViewBag.Courseid)
+  }   *@
+  @foreach(Course course in ViewBag.CourseList)
   {
-    @Html.DisplayFor(course.CourseId)
+    @* @Html.DisplayFor(course.CourseId)
     <input type="checkbox"
-      value="course.CourseId" name="course.CourseId" id="course.CourseId">
+      value="course.CourseId" name="course.CourseId" id="course.CourseId"> *@
+    <br>
+    <label for="CourseId">@course.CourseNumber @course.CourseName</label>
+    <input type="checkbox" value="@course.CourseId">
   }
-
+  <br>
   <input type="submit" value="Complete registration" class="btn btn-default" />
 }
